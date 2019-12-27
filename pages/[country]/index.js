@@ -1,7 +1,12 @@
 import axios from 'axios';
 import Thumbnail from '../../components/Thumbnail';
+import CustomError from '../_error';
 
-const Home = ({ shows, country }) => {
+const Home = ({ shows, country, errorStatus }) => {
+	if (errorStatus) {
+		return <CustomError />;
+	}
+
 	const renderShows = () => {
 		return shows.map((showItem, index) => {
 			const { show } = showItem;
@@ -28,9 +33,6 @@ const Home = ({ shows, country }) => {
 					display: grid;
 					grid-template-columns: 1fr 1fr;
 					gap: 10px;
-					list-style-type: none;
-					padding: 0;
-					margin: 0;
 				}
 			`}</style>
 		</div>
@@ -39,14 +41,21 @@ const Home = ({ shows, country }) => {
 
 Home.getInitialProps = async context => {
 	const country = context.query.country || 'us';
-	const response = await axios.get(
-		`http://api.tvmaze.com/schedule?country=${country}&date=2014-12-01`
-	);
 
-	return {
-		shows: response.data,
-		country
-	};
+	try {
+		const response = await axios.get(
+			`http://api.tvmaze.com/schedule?country=${country}&date=2014-12-01`
+		);
+
+		return {
+			shows: response.data,
+			country
+		};
+	} catch (error) {
+		return {
+			errorStatus: error.response ? error.response.status : 500
+		};
+	}
 };
 
 export default Home;

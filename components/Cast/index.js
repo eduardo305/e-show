@@ -23,9 +23,6 @@ const Cast = ({ cast }) => {
 			<style jsx>{`
 				.cast__list {
 					display: flex;
-					padding: 0;
-					margin: 0;
-					list-style-type: none;
 					overflow-x: scroll;
 				}
 
