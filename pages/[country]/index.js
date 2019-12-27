@@ -1,15 +1,14 @@
 import axios from 'axios';
-import Link from 'next/link';
 import Thumbnail from '../../components/Thumbnail';
 
 const Home = ({ shows, country }) => {
 	const renderShows = () => {
-		return shows.map(showItem => {
+		return shows.map((showItem, index) => {
 			const { show } = showItem;
 
 			// localhost:3000/country/showId
 			return (
-				<li key={show.id}>
+				<li key={index}>
 					<Thumbnail
 						image={(show.image && show.image.medium) || undefined}
 						caption={show.name}
@@ -22,10 +21,7 @@ const Home = ({ shows, country }) => {
 	};
 
 	return (
-		<div>
-			<Link href="/about?abc=123" as="/about/123">
-				<a>About</a>
-			</Link>
+		<div className="home">
 			<ul className="shows-grid">{renderShows()}</ul>
 			<style jsx>{`
 				.shows-grid {

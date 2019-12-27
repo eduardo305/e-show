@@ -5,7 +5,7 @@ const Thumbnail = props => {
 		image = 'https://via.placeholder.com/210x295?text=?',
 		caption,
 		as,
-		href,
+		href = '',
 		small = false
 	} = props;
 
